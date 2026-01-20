@@ -14,13 +14,13 @@ const AppRoutes = () => {
                 <Routes>
                     <Route path="/login" element={<Login />} />
 
-                    {/* Protected Routes */}
+
                     <Route element={<PrivateRoute />}>
                         <Route path="/" element={<Home />} />
                         <Route path="/checkout" element={<Checkout />} />
                     </Route>
 
-                    {/* Fallback */}
+
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </main>

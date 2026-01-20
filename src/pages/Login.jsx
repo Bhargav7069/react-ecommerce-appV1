@@ -5,8 +5,8 @@ import { loginUser, clearError } from '../redux/slices/authSlice';
 import './Login.css';
 
 const Login = () => {
-    const [username, setUsername] = useState('emilys'); // Default for demo
-    const [password, setPassword] = useState('emilyspass'); // Default for demo
+    const [username, setUsername] = useState('emilys');
+    const [password, setPassword] = useState('emilyspass');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Login = () => {
         if (isAuthenticated) {
             navigate('/');
         }
-        // Clear previous errors on mount
+
         dispatch(clearError());
     }, [isAuthenticated, navigate, dispatch]);
 

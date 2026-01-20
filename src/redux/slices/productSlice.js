@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../services/api';
 
-// Fetch all products with optional params for pagination & category
+
 export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
     async ({ limit = 30, skip = 0, category = '' }, { rejectWithValue }) => {
@@ -18,13 +18,13 @@ export const fetchProducts = createAsyncThunk(
     }
 );
 
-// Fetch categories
+
 export const fetchCategories = createAsyncThunk(
     'products/fetchCategories',
     async (_, { rejectWithValue }) => {
         try {
             const response = await api.get('/products/categories');
-            return response.data; // Array of categories
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -35,7 +35,7 @@ const initialState = {
     items: [],
     total: 0,
     categories: [],
-    status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+    status: 'idle',
     error: null,
 };
 
@@ -45,7 +45,7 @@ const productSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            // Fetch Products
+
             .addCase(fetchProducts.pending, (state) => {
                 state.status = 'loading';
             })
@@ -58,7 +58,7 @@ const productSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.payload;
             })
-            // Fetch Categories
+
             .addCase(fetchCategories.fulfilled, (state, action) => {
                 state.categories = action.payload;
             });

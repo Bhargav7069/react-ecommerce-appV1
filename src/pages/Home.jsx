@@ -22,7 +22,7 @@ const Home = () => {
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(e.target.value);
-        setCurrentPage(1); // Reset to page 1 on filter
+        setCurrentPage(1);
     };
 
     const handlePageChange = (newPage) => {
@@ -50,8 +50,7 @@ const Home = () => {
                     <select value={selectedCategory} onChange={handleCategoryChange}>
                         <option value="all">All Categories</option>
                         {categories.map((cat, idx) => (
-                            // API returns categories as objects { slug, name, url } or strings depending on endpoint version.
-                            // dummyjson/products/categories returns array of objects now.
+
                             <option key={idx} value={cat.slug || cat}>
                                 {cat.name || cat}
                             </option>
@@ -77,11 +76,7 @@ const Home = () => {
                     </button>
 
                     {[...Array(Math.min(5, totalPages))].map((_, idx) => {
-                        // Logic to show sliding window or just simple start
-                        // For simplicity, just showing first 5 or logic around current
-                        // Let's keep it simple: just show current page and prev/next logic
-                        // Or just render a limited set. 
-                        // Better: just "Page X of Y" and Prev/Next buttons.
+
                         return null;
                     })}
                     <span style={{ display: 'flex', alignItems: 'center', margin: '0 1rem' }}>

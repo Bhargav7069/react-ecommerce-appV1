@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Helper to load cart from localStorage
+
 const loadCart = () => {
     try {
         const serializedCart = localStorage.getItem('cart');
@@ -12,8 +12,7 @@ const loadCart = () => {
 
 const initialState = {
     cartItems: loadCart(),
-    // Derived state like totalAmount often better calculated in selector or component, 
-    // but we can keep it here if we update it on every action.
+
 };
 
 const cartSlice = createSlice({
@@ -60,11 +59,11 @@ const cartSlice = createSlice({
 
 export const { addToCart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart } = cartSlice.actions;
 
-// Selector for total count
+
 export const selectCartTotalCount = (state) =>
     state.cart.cartItems.reduce((total, item) => total + item.quantity, 0);
 
-// Selector for total amount
+
 export const selectCartTotalAmount = (state) =>
     state.cart.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
 
