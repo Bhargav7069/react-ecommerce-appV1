@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, increaseQuantity, decreaseQuantity, removeFromCart } from '../redux/slices/cartSlice';
+import { showToast } from '../redux/slices/uiSlice';
 import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
@@ -11,6 +12,7 @@ const ProductCard = ({ product }) => {
 
     const handleAddToCart = () => {
         dispatch(addToCart(product));
+        dispatch(showToast(`Added ${product.title} to cart`, 'success'));
     };
 
     const handleIncrease = () => {

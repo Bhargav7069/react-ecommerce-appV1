@@ -9,6 +9,7 @@ const Home = () => {
     const { items, categories, status, total } = useSelector((state) => state.products);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedCategory, setSelectedCategory] = useState('all');
+    const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 12;
 
     useEffect(() => {
@@ -16,12 +17,23 @@ const Home = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        const skip = (currentPage - 1) * itemsPerPage;
-        dispatch(fetchProducts({ limit: itemsPerPage, skip, category: selectedCategory }));
-    }, [dispatch, currentPage, selectedCategory]);
+        const timer = setTimeout(() => {
+            const skip = (currentPage - 1) * itemsPerPage;
+            dispatch(fetchProducts({ limit: itemsPerPage, skip, category: selectedCategory, search: searchTerm }));
+        }, 500); // 500ms debounce
+
+        return () => clearTimeout(timer);
+    }, [dispatch, currentPage, selectedCategory, searchTerm]);
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(e.target.value);
+        setSearchTerm(''); // Clear search when category changes
+        setCurrentPage(1);
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        setSelectedCategory('all'); // Clear category when searching
         setCurrentPage(1);
     };
 
@@ -52,6 +64,17 @@ const Home = () => {
             <div className="container home-container">
                 <div className="controls-bar">
                     <div className="filter-group">
+                        <div className="search-wrapper">
+                            <input
+                                type="text"
+                                placeholder="Search products..."
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                className="search-input"
+                            />
+                            <span className="search-icon">🔍</span>
+                        </div>
+
                         <span className="filter-label">Filter by:</span>
                         <select
                             value={selectedCategory}

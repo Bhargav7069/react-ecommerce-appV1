@@ -4,9 +4,10 @@
 }
 
 .home-container {
-    padding: 0 1rem 4rem;
-    /* Top padding removed as Hero handles spacing */
+    padding: 0 1.5rem 4rem;
     min-height: auto;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
 /* Hero Section */
@@ -14,9 +15,7 @@
     text-align: center;
     padding: 8rem 1rem 6rem;
     margin-bottom: 2rem;
-    /* Reduced from 3rem */
     position: relative;
-    /* Optional: Subtle overlay to make text pop against body gradient */
     background: radial-gradient(circle at center, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.4) 100%);
 }
 
@@ -70,25 +69,64 @@
     background: var(--bg-card);
     backdrop-filter: blur(12px);
     border: var(--glass-border);
-    padding: 1.25rem 2rem;
+    padding: 1rem 1.5rem;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
     animation: fadeIn 0.8s ease-out 0.4s backwards;
 }
 
 .filter-group {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .filter-label {
     color: var(--text-secondary);
     font-weight: 500;
+    white-space: nowrap;
 }
 
+/* Search Input */
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: inherit;
+    width: 250px;
+    transition: all 0.2s ease;
+}
+
+.search-icon {
+    position: absolute;
+    right: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 300px;
+    /* Expand on focus */
+}
+
+/* Select */
 .custom-select {
     appearance: none;
     -webkit-appearance: none;
@@ -121,7 +159,6 @@
 
 .custom-select option {
     background-color: var(--bg-secondary);
-    /* Dark background for dropdown */
     color: var(--text-primary);
     padding: 0.5rem;
 }
@@ -183,6 +220,20 @@
     .controls-bar {
         flex-direction: column;
         align-items: stretch;
+        gap: 1.5rem;
+    }
+
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .search-input:focus {
+        width: 100%;
     }
 
     .hero-title {

@@ -4,12 +4,19 @@ import api from '../../services/api';
 
 export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
-    async ({ limit = 30, skip = 0, category = '' }, { rejectWithValue }) => {
+    async ({ limit = 30, skip = 0, category = '', search = '' }, { rejectWithValue }) => {
         try {
             let url = `/products?limit=${limit}&skip=${skip}`;
-            if (category && category !== 'all') {
+
+            if (search) {
+                // Search takes precedence or combines? DummyJSON search is /products/search?q=...
+                // It doesn't support category + search easily without client-side filter, 
+                // but let's use the search endpoint for now.
+                url = `/products/search?q=${search}&limit=${limit}&skip=${skip}`;
+            } else if (category && category !== 'all') {
                 url = `/products/category/${category}?limit=${limit}&skip=${skip}`;
             }
+
             const response = await api.get(url);
             return response.data;
         } catch (error) {
