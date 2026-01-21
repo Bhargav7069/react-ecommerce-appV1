@@ -34,68 +34,91 @@ const Home = () => {
 
     const totalPages = Math.ceil(total / itemsPerPage);
 
-    if (status === 'loading' && items.length === 0) {
-        return <div className="text-center mt-2">Loading products...</div>;
-    }
-
-    if (status === 'failed') {
-        return <div className="text-center mt-2 error-msg">Error loading products. Please try again.</div>;
-    }
-
     return (
-        <div className="container home-container">
-            <div className="controls-bar">
-                <h2>Our Products</h2>
-                <div className="category-filter">
-                    <select value={selectedCategory} onChange={handleCategoryChange}>
-                        <option value="all">All Categories</option>
-                        {categories.map((cat, idx) => (
-
-                            <option key={idx} value={cat.slug || cat}>
-                                {cat.name || cat}
-                            </option>
-                        ))}
-                    </select>
+        <div className="home-wrapper">
+            <header className="hero-section">
+                <div className="hero-content">
+                    <h1 className="hero-title">
+                        Discover the Rare.<br />
+                        <span className="text-gradient">Embrace the Unique.</span>
+                    </h1>
+                    <p className="hero-subtitle">
+                        Explore our curated collection of premium products designed to elevate your lifestyle.
+                        Quality meets innovation in every item.
+                    </p>
                 </div>
-            </div>
+            </header>
 
-            <div className="products-grid">
-                {items.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
-            </div>
+            <div className="container home-container">
+                <div className="controls-bar">
+                    <div className="filter-group">
+                        <span className="filter-label">Filter by:</span>
+                        <select
+                            value={selectedCategory}
+                            onChange={handleCategoryChange}
+                            className="custom-select"
+                        >
+                            <option value="all">All Categories</option>
+                            {categories.map((cat, idx) => (
+                                <option key={idx} value={cat.slug || cat}>
+                                    {cat.name || cat}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-            {items.length > 0 && (
-                <div className="pagination">
-                    <button
-                        className="page-btn"
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                    >
-                        Prev
-                    </button>
-
-                    {[...Array(Math.min(5, totalPages))].map((_, idx) => {
-
-                        return null;
-                    })}
-                    <span style={{ display: 'flex', alignItems: 'center', margin: '0 1rem' }}>
-                        Page {currentPage} of {totalPages}
-                    </span>
-
-                    <button
-                        className="page-btn"
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                    >
-                        Next
-                    </button>
+                    <div className="showing-result" style={{ color: 'var(--text-secondary)' }}>
+                        Showing {items.length} results
+                    </div>
                 </div>
-            )}
 
-            {items.length === 0 && status === 'succeeded' && (
-                <div className="text-center">No products found.</div>
-            )}
+                {status === 'loading' ? (
+                    <div className="text-center" style={{ padding: '4rem', color: 'var(--text-secondary)' }}>
+                        <div className="loading-spinner">Loading experiences...</div>
+                    </div>
+                ) : (
+                    <>
+                        <div className="products-grid">
+                            {items.map((product) => (
+                                <ProductCard key={product.id} product={product} />
+                            ))}
+                        </div>
+
+                        {items.length > 0 ? (
+                            <div className="pagination">
+                                <button
+                                    className="page-btn"
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                >
+                                    ←
+                                </button>
+
+                                <span className="glass-panel" style={{
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '8px',
+                                    fontWeight: '600',
+                                    color: 'var(--primary-color)'
+                                }}>
+                                    Page {currentPage} of {totalPages}
+                                </span>
+
+                                <button
+                                    className="page-btn"
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                >
+                                    →
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="text-center" style={{ marginTop: '4rem', color: 'var(--text-secondary)' }}>
+                                No products found in this category.
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
         </div>
     );
 };

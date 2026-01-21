@@ -18,22 +18,26 @@ const Navbar = () => {
 
     return (
         <nav className="navbar">
-            <Link to="/" className="navbar-brand">ShopApp</Link>
+            <div className="navbar-container">
+                <Link to="/" className="navbar-brand">
+                    Shop<span style={{ color: 'var(--primary-color)' }}>App</span>
+                </Link>
 
-            <div className="navbar-links">
-                {isAuthenticated ? (
-                    <>
-                        <Link to="/" className="nav-link">Home</Link>
-                        <Link to="/checkout" className="nav-link cart-link">
-                            Cart
-                            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-                        </Link>
-                        <span className="user-welcome">Hi, {user?.firstName}</span>
-                        <button onClick={handleLogout} className="btn-logout">Logout</button>
-                    </>
-                ) : (
-                    <Link to="/login" className="nav-link">Login</Link>
-                )}
+                <div className="navbar-links">
+                    {isAuthenticated ? (
+                        <>
+                            <Link to="/" className="nav-link">Discover</Link>
+                            <Link to="/checkout" className="nav-link cart-link">
+                                Cart
+                                {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+                            </Link>
+                            <span className="user-welcome">Hi, {user?.firstName}</span>
+                            <button onClick={handleLogout} className="btn-logout">Sign Out</button>
+                        </>
+                    ) : (
+                        <Link to="/login" className="nav-link">Sign In</Link>
+                    )}
+                </div>
             </div>
         </nav>
     );
